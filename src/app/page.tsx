@@ -8,6 +8,7 @@ import PlaybackControl from "@/app/components/MainView/PlaybackControl";
 import Search from "@/app/components/Search/Search";
 import ResultView from "@/app/components/Search/ResultView";
 import { SearchResult } from "@/app/components/Search/Search";
+import ViewController from "./components/MainView/ViewController";
 
 export default function HomePage() {
   const [results, setResults] = useState<SearchResult[]>([]);
@@ -16,8 +17,7 @@ export default function HomePage() {
       <Header />
       <VideoPlayerWindow />
       <div className="w-full flex-1 overflow-y-auto">
-        <ResultView results={results} />
-        <PlaylistItem key={0} title={""} thumbnailUrl={""} position={0} />
+        <ViewController />
       </div>
       <div className="mt-auto w-full">
         <Search setResults={setResults} />

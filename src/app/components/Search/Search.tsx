@@ -18,9 +18,10 @@ export interface SearchResult {
 
 interface SearchProps {
   setResults: (results: SearchResult[]) => void;
+  setView?: React.Dispatch<React.SetStateAction<string>>;
 }
 
-const Search = ({ setResults }: SearchProps) => {
+const Search = ({ setResults, setView }: SearchProps) => {
   const [term, setTerm] = useState("");
 
   const searchYouTube = async () => {
@@ -42,6 +43,9 @@ const Search = ({ setResults }: SearchProps) => {
     console.log(response.data.items);
     console.log(Array.isArray(response.data.items));
     setResults(response.data.items);
+    if (setView) {
+      setView("results");
+    }
   };
 
   return (

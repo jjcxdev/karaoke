@@ -9,6 +9,8 @@ interface ResultsProps {
   title: string;
   thumbnailUrl: string;
   position: number;
+  isSelected: boolean;
+  toggleSelection: () => void;
 }
 
 const Selection = () => {
@@ -33,6 +35,8 @@ export default function Results({
   title,
   thumbnailUrl,
   position,
+  isSelected,
+  toggleSelection,
 }: ResultsProps) {
   return (
     <>
