@@ -2,7 +2,7 @@
 
 ## Description
 
-Shareaoke is an interactive web application designed to elevate your karaoke experience. It empowers users to curate their own karaoke playlist by searching and adding videos. The unique feature of Share-aoke is its ability to cast the custom playlist to a TV, syncing it with a Bluetooth microphone. This seamless integration provides endless hours of fun-filled karaoke entertainment.
+Shareaoke is an interactive web application designed to elevate your karaoke experience. It empowers users to curate their own karaoke playlist by searching and adding videos. The unique feature of Shareaoke is its ability to cast the custom playlist to a TV, syncing it with a Bluetooth microphone. This seamless integration provides endless hours of fun-filled karaoke entertainment.
 
 ## Installation
 
