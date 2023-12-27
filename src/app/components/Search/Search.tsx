@@ -45,7 +45,11 @@ const Search = ({ setResults }: SearchProps) => {
   };
 
   return (
-    <div
+    <form
+      onSubmit={(e) => {
+        e.preventDefault();
+        searchYouTube();
+      }}
       className="p-2 px-6"
       style={{
         display: "flex",
@@ -68,7 +72,7 @@ const Search = ({ setResults }: SearchProps) => {
         }}>
         <FaSearch />
       </button>
-    </div>
+    </form>
   );
 };
 
