@@ -1,7 +1,19 @@
 import Image from "next/image";
 import { MdDragIndicator } from "react-icons/md";
 
-export default function PlaylistItem() {
+interface PlaylistItemProps {
+  id: number;
+  title: string;
+  thumbnailUrl: string;
+  position: number;
+}
+
+const PlaylistItem = ({
+  id,
+  title,
+  thumbnailUrl,
+  position,
+}: PlaylistItemProps) => {
   return (
     <>
       <div className="flex h-fit w-full flex-row justify-between border-b-[1px] border-gray-800">
@@ -26,4 +38,5 @@ export default function PlaylistItem() {
       </div>
     </>
   );
-}
+};
+export default PlaylistItem;

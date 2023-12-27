@@ -1,19 +1,26 @@
 "use client";
-import Link from "next/link";
-import VideoPlayerWindow from "./components/VideoPlayerWindow";
-import Header from "./components/Header";
-import PlaylistItem from "./components/PlaylistItem";
-import PlaybackControl from "./components/PlaybackControl";
+
+import { useState } from "react";
+import VideoPlayerWindow from "@/app/components/MainView/VideoPlayerWindow";
+import Header from "@/app/components/MainView/Header";
+import PlaylistItem from "@/app/components/Playlist/PlaylistItem";
+import PlaybackControl from "@/app/components/MainView/PlaybackControl";
+import Search from "@/app/components/Search/Search";
+import ResultView from "@/app/components/Search/ResultView";
+import { SearchResult } from "@/app/components/Search/Search";
 
 export default function HomePage() {
+  const [results, setResults] = useState<SearchResult[]>([]);
   return (
     <main className="flex min-h-screen flex-col items-center justify-start bg-black text-white">
       <Header />
       <VideoPlayerWindow />
       <div className="w-full flex-1 overflow-y-auto">
-        <PlaylistItem />
+        <ResultView results={results} />
+        <PlaylistItem key={0} title={""} thumbnailUrl={""} position={0} />
       </div>
       <div className="mt-auto w-full">
+        <Search setResults={setResults} />
         <PlaybackControl />
       </div>
     </main>

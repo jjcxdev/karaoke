@@ -1,3 +1,5 @@
+"use client";
+
 import { HiMiniSpeakerWave } from "react-icons/hi2";
 import { FaMicrophone } from "react-icons/fa";
 import { FaForwardStep } from "react-icons/fa6";
@@ -39,7 +41,7 @@ const PlayerControls = () => {
 export default function Component() {
   return (
     <main className="items-center w-full justify-center bg-gray-100 dark:bg-gray-800">
-      <Card className="w-full max-w-lg space-y-6 p-8">
+      <Card className="w-full space-y-6 p-4">
         <CardContent>
           <div className="flex items-center justify-between">
             <Button variant="outline">
@@ -50,10 +52,10 @@ export default function Component() {
               <FaForwardStep className="h-4 w-4" />
             </Button>
           </div>
-          <div className="mt-4 flex flex-row gap-1">
+          <div className="mt-4 flex flex-row gap-4">
             <Select id="speaker">
               <SelectTrigger aria-label="Select Speaker Input">
-                <SelectValue placeholder={<HiMiniSpeakerWave />} />
+                <HiMiniSpeakerWave />
               </SelectTrigger>
               <SelectContent>
                 <SelectItem value="speaker1">Speaker 1</SelectItem>
@@ -69,10 +71,10 @@ export default function Component() {
               type="range"
             />
           </div>
-          <div className="mt-4 flex flex-row gap-1">
+          <div className="mt-4 flex flex-row gap-4">
             <Select id="microphone">
               <SelectTrigger aria-label="Select Microphone Input">
-                <SelectValue placeholder={<FaMicrophone />} />
+                <FaMicrophone />
               </SelectTrigger>
               <SelectContent>
                 <SelectItem value="mic1">Microphone 1</SelectItem>
