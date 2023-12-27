@@ -24,6 +24,8 @@ const Search = ({ setResults }: SearchProps) => {
   const [term, setTerm] = useState("");
 
   const searchYouTube = async () => {
+    const query = `${term}, karaoke`;
+    console.log(query);
     console.log(typeof setResults);
 
     const response = await axios.get(
@@ -33,7 +35,7 @@ const Search = ({ setResults }: SearchProps) => {
           part: "snippet",
           maxResults: 5,
           key: process.env.NEXT_PUBLIC_YOUTUBE_API_KEY,
-          q: term,
+          q: `${term}, karaoke`,
         },
       }
     );
