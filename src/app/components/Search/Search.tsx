@@ -41,6 +41,7 @@ const Search = ({ setResults }: SearchProps) => {
         },
       }
     );
+
     console.log(response.data.items);
     console.log(Array.isArray(response.data.items));
     setResults(response.data.items);

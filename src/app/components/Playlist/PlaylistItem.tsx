@@ -38,7 +38,6 @@ const PlaylistItem = ({
          text-white">
             <MdDragIndicator />
           </div>
-          ;
         </div>
       </div>
     </>
