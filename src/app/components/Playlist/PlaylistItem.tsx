@@ -2,10 +2,11 @@ import Image from "next/image";
 import { MdDragIndicator } from "react-icons/md";
 
 interface PlaylistItemProps {
-  id: number;
+  id: string;
   title: string;
   thumbnailUrl: string;
   position: number;
+  channelTitle: string;
 }
 
 const PlaylistItem = ({
@@ -13,27 +14,31 @@ const PlaylistItem = ({
   title,
   thumbnailUrl,
   position,
+  channelTitle,
 }: PlaylistItemProps) => {
   return (
     <>
-      <div className="flex h-fit w-full flex-row justify-between border-b-[1px] border-gray-800">
-        <div className="p-2 flex items-center">01</div>
+      <div className="flex h-fit w-full pr-4   flex-row justify-between border-b-[1px] border-gray-800">
+        <div className="p-2 flex items-center">{position}</div>
         <div className="aspect-video p-2">
           <Image
-            src="/vidHolder.jpeg"
+            src={thumbnailUrl}
             alt="player window"
             height={40}
             width={121}
           />
         </div>
         <div className="w-full flex flex-col justify-center">
-          <div className="text-lg">The Only Exception</div>
-          <div className="text-sm">Paramore</div>
+          <div className="text-lg">{title}</div>
+          <div className="text-sm">{channelTitle}</div>
         </div>
-        <div
-          className="p-2 text-xl flex items-center
+        <div className="p-2 text-xl flex items-center text-white">
+          <div
+            className="p-2 text-xl flex items-center
          text-white">
-          <MdDragIndicator />
+            <MdDragIndicator />
+          </div>
+          ;
         </div>
       </div>
     </>

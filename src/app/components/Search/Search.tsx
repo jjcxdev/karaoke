@@ -5,6 +5,7 @@ import { useState } from "react";
 import { FaSearch } from "react-icons/fa";
 
 export interface SearchResult {
+  id: string;
   snippet: {
     title: string;
     thumbnails: {
@@ -13,6 +14,7 @@ export interface SearchResult {
       };
     };
     description: string;
+    channelTitle: string;
   };
 }
 
@@ -33,7 +35,7 @@ const Search = ({ setResults }: SearchProps) => {
       {
         params: {
           part: "snippet",
-          maxResults: 5,
+          maxResults: 20,
           key: process.env.NEXT_PUBLIC_YOUTUBE_API_KEY,
           q: `${term}, karaoke`,
         },

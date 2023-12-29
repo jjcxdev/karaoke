@@ -11,7 +11,12 @@ const SearchComponent = () => {
   return (
     <div>
       <Search setResults={setResults} />
-      <ResultView results={results} />
+      <ResultView
+        results={results}
+        onAddToPlaylist={function (item: SearchResult): void {
+          throw new Error("Function not implemented.");
+        }}
+      />
     </div>
   );
 };

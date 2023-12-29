@@ -43,52 +43,54 @@ export default function Component() {
     <main className="items-center w-full justify-center bg-gray-100 dark:bg-gray-800">
       <Card className="w-full space-y-6 p-4">
         <CardContent>
-          <div className="flex items-center justify-between">
-            <Button variant="outline">
-              <MdAirplay className="h-4 w-4" />
-            </Button>
-            <PlayerControls />
-            <Button variant="outline">
-              <FaForwardStep className="h-4 w-4" />
-            </Button>
-          </div>
-          <div className="mt-4 flex flex-row gap-4">
-            <Select id="speaker">
-              <SelectTrigger aria-label="Select Speaker Input">
-                <HiMiniSpeakerWave />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="speaker1">Speaker 1</SelectItem>
-                <SelectItem value="speaker2">Speaker 2</SelectItem>
-                <SelectItem value="speaker3">Speaker 3</SelectItem>
-              </SelectContent>
-            </Select>
-            <Input
-              className="w-full"
-              id="speakerVolume"
-              max="100"
-              min="0"
-              type="range"
-            />
-          </div>
-          <div className="mt-4 flex flex-row gap-4">
-            <Select id="microphone">
-              <SelectTrigger aria-label="Select Microphone Input">
-                <FaMicrophone />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="mic1">Microphone 1</SelectItem>
-                <SelectItem value="mic2">Microphone 2</SelectItem>
-                <SelectItem value="mic3">Microphone 3</SelectItem>
-              </SelectContent>
-            </Select>
-            <Input
-              className="w-full"
-              id="microphoneVolume"
-              max="100"
-              min="0"
-              type="range"
-            />
+          <div className="flex flex-row justify-between">
+            <div className="flex items-center gap-4">
+              <Button variant="outline">
+                <MdAirplay className="h-4 w-4" />
+              </Button>
+              <PlayerControls />
+              <Button variant="outline">
+                <FaForwardStep className="h-4 w-4" />
+              </Button>
+            </div>
+            <div className="flex flex-row gap-4">
+              <Select id="speaker">
+                <SelectTrigger aria-label="Select Speaker Input">
+                  <HiMiniSpeakerWave />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="speaker1">Speaker 1</SelectItem>
+                  <SelectItem value="speaker2">Speaker 2</SelectItem>
+                  <SelectItem value="speaker3">Speaker 3</SelectItem>
+                </SelectContent>
+              </Select>
+              <Input
+                className="w-full"
+                id="speakerVolume"
+                max="100"
+                min="0"
+                type="range"
+              />
+            </div>
+            <div className="flex flex-row gap-4">
+              <Select id="microphone">
+                <SelectTrigger aria-label="Select Microphone Input">
+                  <FaMicrophone />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="mic1">Microphone 1</SelectItem>
+                  <SelectItem value="mic2">Microphone 2</SelectItem>
+                  <SelectItem value="mic3">Microphone 3</SelectItem>
+                </SelectContent>
+              </Select>
+              <Input
+                className="w-full"
+                id="microphoneVolume"
+                max="100"
+                min="0"
+                type="range"
+              />
+            </div>
           </div>
         </CardContent>
       </Card>
