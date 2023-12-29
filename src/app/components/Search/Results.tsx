@@ -5,6 +5,8 @@ import Image from "next/image";
 import { FaRegCheckCircle } from "react-icons/fa";
 import { FaCheckCircle } from "react-icons/fa";
 import OpenAI from "openai";
+import { on } from "events";
+import { IoIosAddCircle } from "react-icons/io";
 
 interface ResultsProps {
   title: string;
@@ -28,22 +30,9 @@ const openai = new OpenAI({
 });
 
 const Selection = ({ onSelected }: SelectionProps) => {
-  const [isSelected, setIsSelected] = useState(false);
-
-  const toggleSelection = () => {
-    setIsSelected(!isSelected);
-    if (!isSelected) {
-      onSelected();
-    }
-  };
-
   return (
-    <button className="bg-none" onClick={toggleSelection}>
-      {isSelected ? (
-        <FaCheckCircle className="h-4 w-4 text-green-500" />
-      ) : (
-        <FaRegCheckCircle className="h-4 w-4" />
-      )}
+    <button className="bg-none" onClick={onSelected}>
+      <IoIosAddCircle className="h-4 w-4" />
     </button>
   );
 };

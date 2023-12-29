@@ -31,26 +31,27 @@ export default function HomePage() {
   };
 
   return (
-    <main className="flex max-h-screen min-h-screen overflow-hidden flex-col items-center justify-start bg-black text-white">
+    <main className="flex h-screen overflow-hidden flex-col bg-black text-white">
       <Header />
-      <div className="flex flex-row w-full">
-        <div className="w-1/2">
+      <div className="flex flex-row w-full overflow-hidden">
+        <div className="w-1/2 flex flex-col">
           <div>
             <VideoPlayerWindow />
             <PlaybackControl />
           </div>
-          <div className="w-full flex-1 overflow-y-auto max-h-screen">
+
+          <div className="overflow-y-auto flex-grow">
             <PlaylistView
               playlist={playlist}
               onAddToPlaylist={handleAddToPlaylist}
             />
           </div>
         </div>
-        <div className="w-1/2 ">
-          <div className="w-full">
+        <div className="w-1/2 flex flex-col">
+          <div>
             <Search setResults={setResults} />
           </div>
-          <div className="w-full flex-1 overflow-y-auto max-h-screen">
+          <div className="flex-grow overflow-y-auto">
             <ResultView
               results={results}
               onAddToPlaylist={handleAddToPlaylist}
