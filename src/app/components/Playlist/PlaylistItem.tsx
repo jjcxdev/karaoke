@@ -7,6 +7,7 @@ interface PlaylistItemProps {
   thumbnailUrl: string;
   position: number;
   channelTitle: string;
+  onSelect?: () => void;
 }
 
 const PlaylistItem = ({
@@ -15,10 +16,13 @@ const PlaylistItem = ({
   thumbnailUrl,
   position,
   channelTitle,
+  onSelect,
 }: PlaylistItemProps) => {
   return (
     <>
-      <div className="flex h-fit w-full pr-4   flex-row justify-between border-b-[1px] border-gray-800">
+      <div
+        onClick={() => onSelect && onSelect()}
+        className="flex h-fit w-full pr-4   flex-row justify-between border-b-[1px] border-gray-800">
         <div className="p-2 flex items-center">{position}</div>
         <div className="aspect-video p-2">
           <Image

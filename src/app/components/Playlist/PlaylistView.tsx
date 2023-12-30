@@ -14,9 +14,14 @@ export interface PlaylistItemType {
 interface PlaylistViewProps {
   playlist: PlaylistItemType[];
   onAddToPlaylist: (item: SearchResult) => void;
+  onSelectVide: (video: PlaylistItemType) => void;
 }
 
-const PlaylistView = ({ playlist, onAddToPlaylist }: PlaylistViewProps) => {
+const PlaylistView = ({
+  playlist,
+  onAddToPlaylist,
+  onSelectVide,
+}: PlaylistViewProps) => {
   return (
     <div>
       {playlist.map((item, index) => (
