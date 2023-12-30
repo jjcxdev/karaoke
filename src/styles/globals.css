@@ -6,3 +6,22 @@
 body {
   font-family: "Hubballi", sans-serif;
 }
+
+/* For Chrome, Safari and Opera */
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+::-webkit-scrollbar-track {
+  background: #ff16cc;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #8b35f9;
+}
+
+/* For Internet Explorer and Edge */
+body {
+  scrollbar-width: thin;
+  scrollbar-color: #ff16cc #8b35f9;
+}

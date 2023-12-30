@@ -23,19 +23,21 @@ const PlaylistItem = ({
     <>
       <div
         onClick={() => onSelect && onSelect()}
-        className="flex h-fit w-full pr-4 cursor-pointer  flex-row justify-between border-b-[1px] border-gray-800">
-        <div className="p-2 flex items-center">{position}</div>
-        <div className="aspect-video p-2">
+        className="flex h-fit w-full px-4 py-2 flex-row justify-between border-b-[1px] border-gray-800">
+        <div className="pr-4 flex items-center">{position}</div>
+        <div className="h-[63px] relative w-[112px] overflow-hidden border border-gray-800 flex-none">
           <Image
+            className="w-full h-full absolute object-cover inset-0"
             src={thumbnailUrl}
             alt="player window"
-            height={40}
-            width={121}
+            fill
           />
         </div>
-        <div className="w-full flex flex-col justify-center">
-          <div className="text-lg">{title}</div>
-          <div className="text-sm">{channelTitle}</div>
+        <div className="w-full flex flex-col justify-center pl-4">
+          <div className="text-lg leading-tight text-gray-200">{title}</div>
+          <div className="text-xs leading-tight text-gray-500">
+            {channelTitle}
+          </div>
         </div>
         <div className="p-2 text-xl flex items-center text-white">
           <div

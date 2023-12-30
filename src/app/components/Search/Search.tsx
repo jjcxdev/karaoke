@@ -57,6 +57,11 @@ const Search = ({ setResults }: SearchProps) => {
     setResults(response.data.items);
   };
 
+  const clearSearch = () => {
+    setTerm("");
+    setResults([]);
+  };
+
   return (
     <form
       onSubmit={(e) => {
@@ -69,21 +74,33 @@ const Search = ({ setResults }: SearchProps) => {
         justifyContent: "center",
         alignItems: "center",
       }}>
-      <input
-        className="opacity-50 rounded-md border border-gray-800 bg-gray-950 p-2 "
-        type="text"
-        value={term}
-        onChange={(e) => setTerm(e.target.value)}
-        style={{ flex: 1 }}
-      />
+      <div className="opacity-50 relative rounded-md border border-gray-800 bg-gray-950 p-2 w-full max-w-52">
+        <input
+          className="opacity-50 bg-gray-950"
+          type="text"
+          value={term}
+          onChange={(e) => setTerm(e.target.value)}
+          style={{ flex: 1 }}
+        />
+        <button
+          onClick={searchYouTube}
+          className="absolute right-4 -translate-y-1/2 top-1/2"
+          style={{
+            backgroundColor: "transparent",
+            border: "none",
+          }}>
+          <FaSearch />
+        </button>
+      </div>
       <button
-        onClick={searchYouTube}
-        className="absolute right-8"
+        type="button"
+        onClick={clearSearch}
+        className="opacity-50 rounded-md border border-gray-800 bg-gray-950 p-2 "
         style={{
           backgroundColor: "transparent",
           border: "none",
         }}>
-        <FaSearch />
+        Clear
       </button>
     </form>
   );

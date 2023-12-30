@@ -28,7 +28,7 @@ const openai = new OpenAI({
 
 const Selection = ({ onSelected }: SelectionProps) => {
   return (
-    <button className="bg-none" onClick={onSelected}>
+    <button className="bg-none cursor-pointer" onClick={onSelected}>
       <IoIosAddCircle className="h-4 w-4" />
     </button>
   );
@@ -92,7 +92,7 @@ export default function Results({
     <>
       <div className="flex h-fit w-full px-4 py-2 flex-row justify-between border-b-[1px] border-gray-800">
         <div className="pr-4 flex items-center">{position}</div>
-        <div className="h-[63px] relative w-[112px] overflow-hidden border border-gray-800  flex-none">
+        <div className="h-[63px] relative w-[112px] overflow-hidden border border-gray-800 flex-none">
           <Image
             className="w-full h-full absolute object-cover inset-0"
             src={thumbnailUrl}
