@@ -14,13 +14,13 @@ export interface PlaylistItemType {
 interface PlaylistViewProps {
   playlist: PlaylistItemType[];
   onAddToPlaylist: (item: SearchResult) => void;
-  onSelectVide: (video: PlaylistItemType) => void;
+  onSelectVideo: (video: PlaylistItemType) => void;
 }
 
 const PlaylistView = ({
   playlist,
   onAddToPlaylist,
-  onSelectVide,
+  onSelectVideo,
 }: PlaylistViewProps) => {
   return (
     <div>
@@ -32,6 +32,7 @@ const PlaylistView = ({
           title={item.title}
           thumbnailUrl={item.thumbnailUrl}
           position={index + 1}
+          onSelect={() => onSelectVideo(item)}
         />
       ))}
     </div>

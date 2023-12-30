@@ -21,7 +21,7 @@ export default function HomePage() {
 
   const convertToPlaylistItem = (item: SearchResult): PlaylistItemType => {
     return {
-      id: item.id,
+      id: item.id.videoId,
       title: item.snippet.title,
       thumbnailUrl: item.snippet.thumbnails.default.url,
       position: 0,
@@ -46,25 +46,27 @@ export default function HomePage() {
       <div className="flex flex-row w-full overflow-hidden">
         <div className="w-1/2 flex flex-col">
           <div>
-            <div className="w-full aspect-video bg-indigo-300">
-              {currentVideo ? (
-                <VideoPlayerWindow video={currentVideo} />
-              ) : (
-                <img
-                  src="/video.png"
-                  alt="placeholder"
-                  className="w-full h-full"
-                />
-              )}
+            <div className="w-full h-full aspect-video">
+              <div className="w-full h-full">
+                {currentVideo ? (
+                  <VideoPlayerWindow video={currentVideo} />
+                ) : (
+                  <img
+                    src="/video.png"
+                    alt="placeholder"
+                    className="w-full h-full aspect-video"
+                  />
+                )}
+              </div>
+              <PlaybackControl />
             </div>
-            <PlaybackControl />
           </div>
 
           <div className="overflow-y-auto flex-grow">
             <PlaylistView
               playlist={playlist}
               onAddToPlaylist={handleAddToPlaylist}
-              onSelectVide={handleSelectVideo}
+              onSelectVideo={handleSelectVideo}
             />
           </div>
         </div>

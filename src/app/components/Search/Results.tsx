@@ -47,7 +47,7 @@ export default function Results({
 
   useEffect(() => {
     const fetchSongInfo = async () => {
-      console.log("fetchSongInfo called");
+      // console.log("fetchSongInfo called");
       try {
         const response = await openai.chat.completions.create({
           model: "gpt-3.5-turbo",
@@ -59,7 +59,7 @@ export default function Results({
           ],
           temperature: 0.5,
         });
-        console.log("Response:", response);
+        // console.log("Response:", response);
         if (
           response.choices &&
           response.choices.length > 0 &&
@@ -80,11 +80,11 @@ export default function Results({
           setSongTitle("");
         }
       } catch (error) {
-        console.error("Error fetching song info:", error);
+        // console.error("Error fetching song info:", error);
         setSongInfo("Unknown Title");
       }
     };
-    console.log("useEffect called, title:", title);
+    // console.log("useEffect called, title:", title);
     fetchSongInfo();
   }, [title]);
 

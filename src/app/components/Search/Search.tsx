@@ -5,7 +5,10 @@ import { useState } from "react";
 import { FaSearch } from "react-icons/fa";
 
 export interface SearchResult {
-  id: string;
+  id: {
+    kind: string;
+    videoId: string;
+  };
   snippet: {
     title: string;
     thumbnails: {
@@ -27,8 +30,8 @@ const Search = ({ setResults }: SearchProps) => {
 
   const searchYouTube = async () => {
     const query = `${term}, karaoke`;
-    console.log(query);
-    console.log(typeof setResults);
+    // console.log(query);
+    // console.log(typeof setResults);
 
     const response = await axios.get(
       "https://www.googleapis.com/youtube/v3/search",
@@ -42,8 +45,15 @@ const Search = ({ setResults }: SearchProps) => {
       }
     );
 
-    console.log(response.data.items);
-    console.log(Array.isArray(response.data.items));
+    const videoResults = response.data.items
+      .filter((item: SearchResult) => item.id.kind === "youtube#video")
+      .map((item: SearchResult) => {
+        return { ...item, id: item.id.videoId };
+      });
+
+    setResults(videoResults);
+    // console.log(response.data.items);
+    // console.log(Array.isArray(response.data.items));
     setResults(response.data.items);
   };
 
