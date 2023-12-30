@@ -2,10 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Image from "next/image";
-import { FaRegCheckCircle } from "react-icons/fa";
-import { FaCheckCircle } from "react-icons/fa";
 import OpenAI from "openai";
-import { on } from "events";
 import { IoIosAddCircle } from "react-icons/io";
 
 interface ResultsProps {

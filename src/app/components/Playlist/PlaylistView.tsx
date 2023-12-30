@@ -26,7 +26,7 @@ const PlaylistView = ({
     <div>
       {playlist.map((item, index) => (
         <PlaylistItem
-          key={item.id}
+          key={uuidv4()}
           channelTitle={item.channelTitle}
           id={item.id}
           title={item.title}
