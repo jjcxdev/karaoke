@@ -1,5 +1,7 @@
 "use client";
 
+import { useEffect, useState } from "react";
+
 import { HiMiniSpeakerWave } from "react-icons/hi2";
 import { FaMicrophone } from "react-icons/fa";
 import { FaForwardStep } from "react-icons/fa6";
@@ -18,7 +20,6 @@ import {
   SelectContent,
   Select,
 } from "@/components/ui/select";
-import { useState } from "react";
 
 const PlayerControls = () => {
   const [isPlaying, setIsPlaying] = useState(false);
@@ -39,6 +40,24 @@ const PlayerControls = () => {
 };
 
 export default function Component() {
+  const [microphones, setMicrophones] = useState<MediaDeviceInfo[]>([]);
+
+  useEffect(() => {
+    navigator.mediaDevices
+      .getUserMedia({ audio: true })
+      .then((stream) => {
+        //Stop all tracks to release the microphone
+        stream.getTracks().forEach((track) => track.stop());
+
+        // Now enumerate devices
+        navigator.mediaDevices.enumerateDevices().then((devices) => {
+          const mics = devices.filter((device) => device.kind === "audioinput");
+          setMicrophones(mics);
+        });
+      })
+      .catch((err) => console.error(err));
+  }, []);
+
   return (
     <main className="items-center w-full justify-center bg-gray-100 dark:bg-gray-800">
       <Card className="w-full space-y-6 p-4">
@@ -78,9 +97,14 @@ export default function Component() {
                   <FaMicrophone />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="mic1">Microphone 1</SelectItem>
-                  <SelectItem value="mic2">Microphone 2</SelectItem>
-                  <SelectItem value="mic3">Microphone 3</SelectItem>
+                  {microphones.map(
+                    (mic) =>
+                      mic.deviceId && (
+                        <SelectItem key={mic.deviceId} value={mic.deviceId}>
+                          {mic.label || "Unknown Microphone"}
+                        </SelectItem>
+                      )
+                  )}
                 </SelectContent>
               </Select>
               <Input
