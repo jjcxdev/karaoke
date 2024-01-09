@@ -68,7 +68,7 @@ const Search = ({ setResults }: SearchProps) => {
         e.preventDefault();
         searchYouTube();
       }}
-      className="p-2 px-6"
+      className="p-2 px-6 flex flex-row gap-4"
       style={{
         display: "flex",
         justifyContent: "center",
@@ -95,9 +95,8 @@ const Search = ({ setResults }: SearchProps) => {
       <button
         type="button"
         onClick={clearSearch}
-        className="opacity-50 rounded-md border border-gray-800 bg-gray-950 p-2 "
+        className="rounded-md border border-gray-800 bg-gray-950 p-2 px-4 opacity-50"
         style={{
-          backgroundColor: "transparent",
           border: "none",
         }}>
         Clear
