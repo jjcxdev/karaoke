@@ -62,7 +62,7 @@ export default function Component() {
     <main className="items-center w-full justify-center bg-gray-100 dark:bg-gray-800">
       <Card className="w-full space-y-6 p-4">
         <CardContent>
-          <div className="flex flex-row justify-between">
+          <div className="flex flex-row justify-between gap-4">
             <div className="flex items-center gap-4">
               <Button variant="outline">
                 <MdAirplay className="h-4 w-4" />
