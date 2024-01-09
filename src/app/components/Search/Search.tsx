@@ -41,9 +41,13 @@ const Search = ({ setResults }: SearchProps) => {
           maxResults: 20,
           key: process.env.NEXT_PUBLIC_YOUTUBE_API_KEY,
           q: `${term}, karaoke`,
+          type: "video",
+          videoEmbeddable: "true",
         },
       }
     );
+
+    console.log("Payload Size", response.headers["content-length"], "bytes");
 
     const videoResults = response.data.items
       .filter((item: SearchResult) => item.id.kind === "youtube#video")
