@@ -4,6 +4,7 @@ import axios from "axios";
 import { useState } from "react";
 import { FaSearch } from "react-icons/fa";
 
+// Define the structure of the search result
 export interface SearchResult {
   id: {
     kind: string;
@@ -21,46 +22,61 @@ export interface SearchResult {
   };
 }
 
+// Define the props for the Search component
 interface SearchProps {
   setResults: (results: SearchResult[]) => void;
 }
 
+// Users search for videos
 const Search = ({ setResults }: SearchProps) => {
+  // term is the search term used by the user
   const [term, setTerm] = useState("");
 
+  // searchYouTube makes a request to YouTube API for videos
   const searchYouTube = async () => {
+    // Append karaoke to the search term
     const query = `${term}, karaoke`;
-    // console.log(query);
-    // console.log(typeof setResults);
-
-    const response = await axios.get(
+    // Make a GET request to the YouTube API
+    const idResponse = await axios.get(
       "https://www.googleapis.com/youtube/v3/search",
       {
         params: {
-          part: "snippet",
+          part: "id",
           maxResults: 20,
           key: process.env.NEXT_PUBLIC_YOUTUBE_API_KEY,
           q: `${term}, karaoke`,
           type: "video",
-          videoEmbeddable: "true",
+          videoEmbeddable: "true", // Only return videos that can be embedded
         },
       }
     );
 
-    console.log("Payload Size", response.headers["content-length"], "bytes");
+    // Extract the videoIDs from the response
+    const videoIds = idResponse.data.items.map((item: any) => item.id.videoId);
 
-    const videoResults = response.data.items
-      .filter((item: SearchResult) => item.id.kind === "youtube#video")
-      .map((item: SearchResult) => {
-        return { ...item, id: item.id.videoId };
-      });
+    // Make a GET request to the YouTube API to get the snippet data
+    const snippetResponse = await axios.get(
+      "https://www.googleapis.com/youtube/v3/videos",
+      {
+        params: {
+          part: "snippet",
+          id: videoIds.join(","), // Pass the videoIds as comma-separated string
+          key: process.env.NEXT_PUBLIC_YOUTUBE_API_KEY,
+        },
+      }
+    );
 
-    setResults(videoResults);
-    // console.log(response.data.items);
-    // console.log(Array.isArray(response.data.items));
-    setResults(response.data.items);
+    // Combine the id and snippet data into the results
+    const results = snippetResponse.data.items.map((item: any) => ({
+      id: { kind: "youtube#video", videoId: item.id },
+      snippet: item.snippet,
+    }));
+
+    // Update the results state with the video results
+    setResults(results);
   };
 
+  // clearSearch resets the search term and results
   const clearSearch = () => {
     setTerm("");
     setResults([]);
