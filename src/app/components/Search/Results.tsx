@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from "react";
 import Image from "next/image";
-import OpenAI from "openai";
 import { IoIosAddCircle } from "react-icons/io";
 
 interface ResultsProps {
@@ -20,11 +19,6 @@ interface ResultsProps {
 interface SelectionProps {
   onSelected: () => void;
 }
-
-const openai = new OpenAI({
-  apiKey: process.env.NEXT_PUBLIC_OPENAI_API_KEY,
-  dangerouslyAllowBrowser: true,
-});
 
 const Selection = ({ onSelected }: SelectionProps) => {
   return (
@@ -47,25 +41,17 @@ export default function Results({
 
   useEffect(() => {
     const fetchSongInfo = async () => {
-      // console.log("fetchSongInfo called");
       try {
-        const response = await openai.chat.completions.create({
-          model: "gpt-3.5-turbo",
-          messages: [
-            {
-              role: "user",
-              content: `Extract the band name and song title from this text: "${title}"`,
-            },
-          ],
-          temperature: 0.5,
-        });
-        // console.log("Response:", response);
+        const response = await fetch(
+          `/api/song-info?title=${encodeURIComponent(title)}`
+        );
+        const data = await response.json();
         if (
-          response.choices &&
-          response.choices.length > 0 &&
-          response.choices[0].message.content
+          data.choices &&
+          data.choices.length > 0 &&
+          data.choices[0].message.content
         ) {
-          const content = response.choices[0].message.content;
+          const content = data.choices[0].message.content;
 
           const lines = content.split("\n");
           if (lines.length >= 2) {
@@ -80,11 +66,9 @@ export default function Results({
           setSongTitle("");
         }
       } catch (error) {
-        // console.error("Error fetching song info:", error);
         setSongInfo("Unknown Title");
       }
     };
-    // console.log("useEffect called, title:", title);
     fetchSongInfo();
   }, [title]);
 
