@@ -11,16 +11,19 @@ const ResultView = ({
 }) => {
   return (
     <div>
-      {results.map((result, index) => (
-        <Results
-          key={uuidv4()}
-          title={result.snippet.title}
-          thumbnailUrl={result.snippet.thumbnails.default.url}
-          position={index + 1}
-          channelTitle={result.snippet.channelTitle}
-          onAddToPlaylist={() => onAddToPlaylist(result)}
-        />
-      ))}
+      {results.map((result, index) => {
+        const key = `${result.id.videoId}-${index}`;
+        return (
+          <Results
+            key={key}
+            title={result.snippet.title}
+            thumbnailUrl={result.snippet.thumbnails.default.url}
+            position={index + 1}
+            channelTitle={result.snippet.channelTitle}
+            onAddToPlaylist={() => onAddToPlaylist(result)}
+          />
+        );
+      })}
     </div>
   );
 };

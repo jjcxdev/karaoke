@@ -29,13 +29,13 @@ const Selection = ({ onSelected }: SelectionProps) => {
   );
 };
 
-export default function Results({
+const Results = ({
   title,
   thumbnailUrl,
   position,
   channelTitle,
   onAddToPlaylist,
-}: ResultsProps) {
+}: ResultsProps) => {
   const [songInfo, setSongInfo] = useState(title);
   const [bandName, setBandName] = useState("");
   const [songTitle, setSongTitle] = useState("");
@@ -110,4 +110,5 @@ export default function Results({
       )}
     </>
   );
-}
+};
+export default Results;
