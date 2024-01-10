@@ -56,6 +56,7 @@ export default function HomePage() {
                     className="w-full h-full aspect-video"
                     width="1240"
                     height="720"
+                    priority={true}
                   />
                 )}
               </div>
