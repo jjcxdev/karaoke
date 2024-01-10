@@ -1,11 +1,9 @@
-import { useState } from "react";
-import { v4 as uuidv4 } from "uuid";
 import PlaylistItem from "./PlaylistItem";
-import { SearchResult } from "../Search/Search";
 
 export interface PlaylistItemType {
   id: string;
-  title: string;
+  songTitle: string;
+  bandName: string;
   thumbnailUrl: string;
   position: number;
   channelTitle: string;
@@ -13,23 +11,26 @@ export interface PlaylistItemType {
 
 interface PlaylistViewProps {
   playlist: PlaylistItemType[];
-  onAddToPlaylist: (item: SearchResult) => void;
+  onAddToPlaylist: (item: {
+    songTitle: string;
+    bandName: string;
+    thumbnailUrl: string;
+    videoId: string;
+    channelTitle: string;
+  }) => void;
   onSelectVideo: (video: PlaylistItemType) => void;
 }
 
-const PlaylistView = ({
-  playlist,
-  onAddToPlaylist,
-  onSelectVideo,
-}: PlaylistViewProps) => {
+const PlaylistView = ({ playlist, onSelectVideo }: PlaylistViewProps) => {
   return (
     <div>
       {playlist.map((item, index) => (
         <PlaylistItem
-          key={item.id || item.title + index}
+          key={item.id || item.songTitle + index}
           channelTitle={item.channelTitle}
           id={item.id}
-          title={item.title}
+          songTitle={item.songTitle}
+          bandName={item.bandName}
           thumbnailUrl={item.thumbnailUrl}
           position={index + 1}
           onSelect={() => onSelectVideo(item)}

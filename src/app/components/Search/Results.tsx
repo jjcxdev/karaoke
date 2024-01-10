@@ -4,26 +4,53 @@ import { useEffect, useState } from "react";
 import Image from "next/image";
 import { IoIosAddCircle } from "react-icons/io";
 import { Skeleton } from "@/components/ui/skeleton";
+import { SearchResult } from "./Search";
 
 interface ResultsProps {
   title: string;
   thumbnailUrl: string;
   position: number;
   channelTitle: string;
+  item: SearchResult;
   onAddToPlaylist: (item: {
-    title: string;
+    songTitle: string;
+    bandName: string;
     thumbnailUrl: string;
-    position: number;
+    videoId: string;
+    channelTitle: string;
   }) => void;
 }
 
 interface SelectionProps {
   onSelected: () => void;
+  title: string;
+  bandName: string;
+  thumbnailUrl: string;
+  position: number;
+  videoId: string;
 }
 
-const Selection = ({ onSelected }: SelectionProps) => {
+const Selection = ({
+  onSelected,
+  title,
+  bandName,
+  thumbnailUrl,
+  position,
+  videoId,
+}: SelectionProps) => {
   return (
-    <button className="bg-none cursor-pointer" onClick={onSelected}>
+    <button
+      className="bg-none cursor-pointer"
+      onClick={() => {
+        console.log("adding to playlist:", {
+          title,
+          bandName,
+          thumbnailUrl,
+          position,
+          videoId,
+        });
+        onSelected();
+      }}>
       <IoIosAddCircle className="h-4 w-4" />
     </button>
   );
@@ -35,6 +62,7 @@ const Results = ({
   position,
   channelTitle,
   onAddToPlaylist,
+  item,
 }: ResultsProps) => {
   const [songInfo, setSongInfo] = useState(title);
   const [bandName, setBandName] = useState("");
@@ -81,11 +109,11 @@ const Results = ({
           <div className="pr-4 flex items-center">{position}</div>
           <div className="h-[63px] relative w-[112px] overflow-hidden border border-gray-800 flex-none">
             <Image
-              className="w-full h-full absolute object-cover inset-0"
+              className="w-full h-full absolute object-cover inset-0 max-w-[110px]"
               src={thumbnailUrl}
               alt="player window"
               fill
-              sizes="max-width: 110px"
+              sizes="(max-width: 110px)"
             />
           </div>
           <div className="w-full flex flex-col justify-center pl-4">
@@ -101,9 +129,20 @@ const Results = ({
           </div>
           <div className="p-2 text-xl flex items-center text-white">
             <Selection
-              onSelected={() =>
-                onAddToPlaylist({ title, thumbnailUrl, position })
-              }
+              title={songTitle}
+              bandName={bandName}
+              thumbnailUrl={thumbnailUrl}
+              position={position}
+              videoId={item.id.videoId}
+              onSelected={() => {
+                onAddToPlaylist({
+                  songTitle: songTitle,
+                  bandName: bandName,
+                  thumbnailUrl: item.snippet.thumbnails.default.url,
+                  videoId: item.id.videoId,
+                  channelTitle: item.snippet.channelTitle,
+                });
+              }}
             />
           </div>
         </div>

@@ -4,7 +4,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Sharaoke",
   description: "Created by jjcx for Karen",
-  icons: "/images/favicon.svg",
+  icons: "/favicon.svg",
 };
 
 export default function RootLayout({
