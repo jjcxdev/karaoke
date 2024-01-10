@@ -42,11 +42,12 @@ const Search = ({ setResults }: SearchProps) => {
       {
         params: {
           part: "id",
-          maxResults: 20,
+          maxResults: 10,
           key: process.env.NEXT_PUBLIC_YOUTUBE_API_KEY,
           q: `${term}, karaoke`,
           type: "video",
           videoEmbeddable: "true", // Only return videos that can be embedded
+          videoSyndicated: "true", // Only return videos that can be played outside youtube
         },
       }
     );

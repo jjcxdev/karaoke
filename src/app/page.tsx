@@ -1,16 +1,15 @@
 "use client";
 
-import { use, useState } from "react";
+import { useState } from "react";
 import VideoPlayerWindow from "@/app/components/MainView/VideoPlayerWindow";
 import Header from "@/app/components/MainView/Header";
-import PlaylistItem from "@/app/components/Playlist/PlaylistItem";
 import PlaybackControl from "@/app/components/MainView/PlaybackControl";
 import Search from "@/app/components/Search/Search";
 import ResultView from "@/app/components/Search/ResultView";
 import { SearchResult } from "@/app/components/Search/Search";
 import PlaylistView from "@/app/components/Playlist/PlaylistView";
 import { PlaylistItemType } from "@/app/components/Playlist/PlaylistView";
-import YouTube from "react-youtube";
+import Image from "next/image";
 
 export default function HomePage() {
   const [results, setResults] = useState<SearchResult[]>([]);
@@ -51,10 +50,12 @@ export default function HomePage() {
                 {currentVideo ? (
                   <VideoPlayerWindow video={currentVideo} />
                 ) : (
-                  <img
+                  <Image
                     src="/video.png"
                     alt="placeholder"
                     className="w-full h-full aspect-video"
+                    width="1240"
+                    height="720"
                   />
                 )}
               </div>

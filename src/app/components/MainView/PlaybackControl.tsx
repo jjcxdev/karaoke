@@ -73,15 +73,10 @@ export default function Component() {
               </Button>
             </div>
             <div className="flex flex-row gap-4">
-              <Select id="speaker">
+              <Select>
                 <SelectTrigger aria-label="Select Speaker Input">
                   <HiMiniSpeakerWave />
                 </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="speaker1">Speaker 1</SelectItem>
-                  <SelectItem value="speaker2">Speaker 2</SelectItem>
-                  <SelectItem value="speaker3">Speaker 3</SelectItem>
-                </SelectContent>
               </Select>
               <Input
                 className="w-full"
