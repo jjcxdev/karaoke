@@ -87,7 +87,7 @@ export default function Component() {
               />
             </div>
             <div className="flex flex-row gap-4">
-              <Select id="microphone">
+              <Select>
                 <SelectTrigger aria-label="Select Microphone Input">
                   <FaMicrophone />
                 </SelectTrigger>
