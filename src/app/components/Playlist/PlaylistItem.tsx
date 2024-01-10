@@ -3,7 +3,8 @@ import { MdDragIndicator } from "react-icons/md";
 
 interface PlaylistItemProps {
   id: string;
-  title: string;
+  songTitle: string;
+  bandName: string;
   thumbnailUrl: string;
   position: number;
   channelTitle: string;
@@ -12,7 +13,8 @@ interface PlaylistItemProps {
 
 const PlaylistItem = ({
   id,
-  title,
+  songTitle,
+  bandName,
   thumbnailUrl,
   position,
   channelTitle,
@@ -34,7 +36,8 @@ const PlaylistItem = ({
           />
         </div>
         <div className="w-full flex flex-col justify-center pl-4">
-          <div className="text-lg leading-tight text-gray-200">{title}</div>
+          <div className="text-lg leading-tight text-gray-200">{songTitle}</div>
+          <div className="text-sm leading-tight text-gray-400">{bandName}</div>
           <div className="text-xs leading-tight text-gray-500">
             {channelTitle}
           </div>

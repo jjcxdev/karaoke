@@ -1,14 +1,18 @@
 import Results from "@/app/components/Search/Results";
 import { SearchResult } from "@/app/components/Search/Search";
-import { v4 as uuidv4 } from "uuid";
 
-const ResultView = ({
-  results,
-  onAddToPlaylist,
-}: {
+interface ResultViewProps {
   results: SearchResult[];
-  onAddToPlaylist: (item: SearchResult) => void;
-}) => {
+  onAddToPlaylist: (item: {
+    songTitle: string;
+    bandName: string;
+    thumbnailUrl: string;
+    videoId: string;
+    channelTitle: string;
+  }) => void;
+}
+
+const ResultView = ({ results, onAddToPlaylist }: ResultViewProps) => {
   return (
     <div>
       {results.map((result, index) => {
@@ -20,7 +24,8 @@ const ResultView = ({
             thumbnailUrl={result.snippet.thumbnails.default.url}
             position={index + 1}
             channelTitle={result.snippet.channelTitle}
-            onAddToPlaylist={() => onAddToPlaylist(result)}
+            onAddToPlaylist={onAddToPlaylist}
+            item={result}
           />
         );
       })}

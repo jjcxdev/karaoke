@@ -18,18 +18,36 @@ export default function HomePage() {
     null
   );
 
-  const convertToPlaylistItem = (item: SearchResult): PlaylistItemType => {
+  const convertToPlaylistItem = (
+    item: SearchResult,
+    songTitle: string,
+    bandName: string
+  ): PlaylistItemType => {
     return {
       id: item.id.videoId,
-      title: item.snippet.title,
+      songTitle: songTitle,
+      bandName: bandName,
       thumbnailUrl: item.snippet.thumbnails.default.url,
       position: 0,
       channelTitle: item.snippet.channelTitle,
     };
   };
 
-  const handleAddToPlaylist = (item: SearchResult) => {
-    const playlistItem = convertToPlaylistItem(item);
+  const handleAddToPlaylist = (item: {
+    songTitle: string;
+    bandName: string;
+    thumbnailUrl: string;
+    videoId: string;
+    channelTitle: string;
+  }) => {
+    const playlistItem = {
+      id: item.videoId,
+      songTitle: item.songTitle,
+      bandName: item.bandName,
+      thumbnailUrl: item.thumbnailUrl,
+      position: playlist.length + 1,
+      channelTitle: item.channelTitle,
+    };
     setPlaylist((prevPlaylist) => [...prevPlaylist, playlistItem]);
   };
 
