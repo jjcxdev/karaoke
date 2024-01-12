@@ -1,15 +1,10 @@
 "use client";
 
 import { useEffect, useState } from "react";
-
 import { HiMiniSpeakerWave } from "react-icons/hi2";
-import { FaMicrophone } from "react-icons/fa";
 import { FaForwardStep } from "react-icons/fa6";
-import { FaPlay } from "react-icons/fa";
-import { FaPause } from "react-icons/fa";
-
+import { FaPlay, FaPause, FaMicrophone } from "react-icons/fa";
 import { MdAirplay } from "react-icons/md";
-
 import { CardContent, Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -20,6 +15,8 @@ import {
   SelectContent,
   Select,
 } from "@/components/ui/select";
+import AudioComponent from "./AudioComponent";
+import AudioVisualizer from "./AnalyserNode";
 
 const PlayerControls = () => {
   const [isPlaying, setIsPlaying] = useState(false);
@@ -39,31 +36,55 @@ const PlayerControls = () => {
   );
 };
 
-export default function Component() {
+function PlaybackControl() {
   const [microphones, setMicrophones] = useState<MediaDeviceInfo[]>([]);
+  const [selectedMicId, setSelectedMicId] = useState("");
+  const [micVolume, setMicVolume] = useState(0.5);
+  const [enableAudio, setEnableAudio] = useState(false);
+  const [analyserNode, setAnalyserNode] = useState<AnalyserNode | null>(null);
+
+  const handleMicVolumeChange = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const newVolume = parseFloat(event.target.value);
+    console.log("microphone volume changed", newVolume);
+    setMicVolume(newVolume);
+  };
 
   useEffect(() => {
-    navigator.mediaDevices
-      .getUserMedia({ audio: true })
-      .then((stream) => {
-        //Stop all tracks to release the microphone
-        stream.getTracks().forEach((track) => track.stop());
-
-        // Now enumerate devices
-        navigator.mediaDevices.enumerateDevices().then((devices) => {
-          const mics = devices.filter((device) => device.kind === "audioinput");
-          setMicrophones(mics);
-        });
-      })
-      .catch((err) => console.error(err));
+    navigator.mediaDevices.enumerateDevices().then((devices) => {
+      const mics = devices.filter((device) => device.kind === "audioinput");
+      console.log("available microphones:", mics);
+      setMicrophones(mics);
+    });
   }, []);
+
+  useEffect(() => {
+    const audioContext = new AudioContext();
+    const node = audioContext.createAnalyser();
+    setAnalyserNode(node);
+
+    return () => {
+      node.disconnect();
+      audioContext.close();
+    };
+  }, []);
+
+  const handleMicChange = (value: string) => {
+    console.log("selected microphone id", value);
+    setSelectedMicId(value);
+  };
+
+  const toggleEnableAudio = () => {
+    setEnableAudio(!enableAudio);
+  };
 
   return (
     <main className="items-center w-full justify-center bg-gray-100 dark:bg-gray-800">
       <Card className="w-full space-y-6 p-4">
         <CardContent>
           <div className="flex flex-row justify-between gap-4">
-            <div className="flex items-center gap-4">
+            {/* <div className="flex items-center gap-4">
               <Button variant="outline">
                 <MdAirplay className="h-4 w-4" />
               </Button>
@@ -71,7 +92,7 @@ export default function Component() {
               <Button variant="outline">
                 <FaForwardStep className="h-4 w-4" />
               </Button>
-            </div>
+            </div> */}
             <div className="flex flex-row gap-4">
               <Select>
                 <SelectTrigger aria-label="Select Speaker Input">
@@ -87,7 +108,7 @@ export default function Component() {
               />
             </div>
             <div className="flex flex-row gap-4">
-              <Select>
+              <Select onValueChange={handleMicChange}>
                 <SelectTrigger aria-label="Select Microphone Input">
                   <FaMicrophone />
                 </SelectTrigger>
@@ -105,14 +126,24 @@ export default function Component() {
               <Input
                 className="w-full"
                 id="microphoneVolume"
-                max="100"
+                max="1"
                 min="0"
+                step=".01"
+                value={micVolume}
+                onChange={handleMicVolumeChange}
                 type="range"
               />
             </div>
           </div>
         </CardContent>
       </Card>
+      <AudioVisualizer analyserNode={analyserNode!} />
+      <button onClick={toggleEnableAudio}>
+        {enableAudio ? "Switch to Microphone" : "Switch to Oscillator"}
+      </button>
+      <AudioComponent selectedMicId={selectedMicId} enableAudio={enableAudio} />
     </main>
   );
 }
+
+export default PlaybackControl;
