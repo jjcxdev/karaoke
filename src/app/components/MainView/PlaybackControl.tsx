@@ -81,7 +81,11 @@ function PlaybackControl() {
 
   return (
     <main className="items-center w-full justify-center bg-gray-100 dark:bg-gray-800">
-      <AudioComponent selectedMicId={selectedMicId} enableAudio={enableAudio} />
+      <AudioComponent
+        selectedMicId={selectedMicId}
+        enableAudio={enableAudio}
+        micVolume={micVolume}
+      />
       <Card className="w-full space-y-6 p-4">
         <CardContent>
           <div className="flex flex-row justify-between gap-4">
