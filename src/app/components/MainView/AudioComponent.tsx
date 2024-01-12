@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState } from "react";
 import AudioVisualizer from "./AnalyserNode";
 
 interface AudioComponentProps {
@@ -12,18 +12,16 @@ const AudioComponent = ({
   selectedMicId,
   enableAudio,
 }: AudioComponentProps) => {
-  const audioContextRef = useRef<AudioContext | null>(null);
   const [analyserNode, setAnalyserNode] = useState<AnalyserNode | null>(null);
 
   useEffect(() => {
-    // check if window is defined
-    if (typeof window !== "undefined" && !audioContextRef.current) {
-      audioContextRef.current = new AudioContext();
+    if (typeof window === "undefined") {
+      // exit if not in browswer environment
+      return;
     }
-    if (!audioContextRef.current) return;
-    const audioContext = audioContextRef.current;
 
-    // create gain node and analyzer node
+    // create audiocontext and gain node and analyzer node
+    const audioContext = new AudioContext();
     const gainNode = audioContext.createGain();
     const analyser = audioContext.createAnalyser();
     analyser.fftSize = 1024;
