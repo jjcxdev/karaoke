@@ -38,7 +38,12 @@ const AudioComponent = ({
       // setup microphone
       navigator.mediaDevices
         .getUserMedia({
-          audio: { deviceId: { exact: selectedMicId } },
+          audio: {
+            deviceId: { exact: selectedMicId },
+            echoCancellation: false,
+            autoGainControl: false,
+            noiseSuppression: false,
+          },
         })
         .then((micStream) => {
           sourceNode = audioContext.createMediaStreamSource(micStream);

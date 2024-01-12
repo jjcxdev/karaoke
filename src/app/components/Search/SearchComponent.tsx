@@ -13,7 +13,13 @@ const SearchComponent = () => {
       <Search setResults={setResults} />
       <ResultView
         results={results}
-        onAddToPlaylist={function (item: SearchResult): void {
+        onAddToPlaylist={(item: {
+          songTitle: string;
+          bandName: string;
+          thumbnailUrl: string;
+          videoId: string;
+          channelTitle: string;
+        }) => {
           throw new Error("Function not implemented.");
         }}
       />

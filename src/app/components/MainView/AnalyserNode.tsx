@@ -18,7 +18,7 @@ const AudioVisualizer = ({ analyserNode }: { analyserNode: AnalyserNode }) => {
       analyserNode.getByteFrequencyData(dataArray);
 
       ctx.clearRect(0, 0, canvas.width, canvas.height);
-      ctx.fillStyle = "rgb(200, 200, 200)";
+      ctx.fillStyle = "rgb(24, 24, 24)";
       ctx.fillRect(0, 0, canvas.width, canvas.height);
 
       let barWidth = (canvas.width / bufferLength) * 2.5;
@@ -27,7 +27,14 @@ const AudioVisualizer = ({ analyserNode }: { analyserNode: AnalyserNode }) => {
 
       for (let i = 0; i < bufferLength; i++) {
         barHeight = dataArray[i];
-        ctx.fillStyle = `rgb(${barHeight + 100}, 50, 50)`;
+
+        // interpolate between two colors based on bar height
+        const ratio = barHeight / 255;
+        const r = Math.floor(255 * (1 - ratio) + 130 * ratio);
+        const g = Math.floor(23 * (1 - ratio) + 51 * ratio);
+        const b = Math.floor(202 * (1 - ratio) + 231 * ratio);
+
+        ctx.fillStyle = `rgb(${r},${g},${b})`;
         ctx.fillRect(x, canvas.height - barHeight, barWidth, barHeight);
 
         x += barWidth + 1;
@@ -38,7 +45,7 @@ const AudioVisualizer = ({ analyserNode }: { analyserNode: AnalyserNode }) => {
     draw();
   }, [analyserNode]);
 
-  return <canvas ref={canvasRef} width="300" height="100" />;
+  return <canvas className="w-full h-4" ref={canvasRef} />;
 };
 
 export default AudioVisualizer;

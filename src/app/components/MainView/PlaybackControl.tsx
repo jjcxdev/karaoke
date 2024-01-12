@@ -81,6 +81,7 @@ function PlaybackControl() {
 
   return (
     <main className="items-center w-full justify-center bg-gray-100 dark:bg-gray-800">
+      <AudioComponent selectedMicId={selectedMicId} enableAudio={enableAudio} />
       <Card className="w-full space-y-6 p-4">
         <CardContent>
           <div className="flex flex-row justify-between gap-4">
@@ -137,11 +138,10 @@ function PlaybackControl() {
           </div>
         </CardContent>
       </Card>
-      <AudioVisualizer analyserNode={analyserNode!} />
-      <button onClick={toggleEnableAudio}>
+      {/* <AudioVisualizer analyserNode={analyserNode!} /> */}
+      {/* <button onClick={toggleEnableAudio}>
         {enableAudio ? "Switch to Microphone" : "Switch to Oscillator"}
-      </button>
-      <AudioComponent selectedMicId={selectedMicId} enableAudio={enableAudio} />
+      </button> */}
     </main>
   );
 }
