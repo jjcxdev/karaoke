@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState } from "react";
 import AudioVisualizer from "./AnalyserNode";
 
 interface AudioComponentProps {
@@ -12,18 +12,16 @@ const AudioComponent = ({
   selectedMicId,
   enableAudio,
 }: AudioComponentProps) => {
-  const audioContextRef = useRef<AudioContext | null>(null);
   const [analyserNode, setAnalyserNode] = useState<AnalyserNode | null>(null);
 
   useEffect(() => {
-    // check if window is defined
-    if (typeof window !== "undefined" && !audioContextRef.current) {
-      audioContextRef.current = new AudioContext();
+    if (typeof window === "undefined") {
+      // exit if not in browswer environment
+      return;
     }
-    if (!audioContextRef.current) return;
-    const audioContext = audioContextRef.current;
 
-    // create gain node and analyzer node
+    // create audiocontext and gain node and analyzer node
+    const audioContext = new AudioContext();
     const gainNode = audioContext.createGain();
     const analyser = audioContext.createAnalyser();
     analyser.fftSize = 1024;
@@ -75,81 +73,3 @@ const AudioComponent = ({
 };
 
 export default AudioComponent;
-
-// const AudioComponent = ({
-//   selectedMicId,
-//   volume,
-//   enableAudio,
-// }: AudioComponentProps) => {
-//   const [audioStream, setAudioStream] = useState<MediaStream | null>(null);
-
-//   useEffect(() => {
-//     console.log("audio component mounted", { selectedMicId, volume });
-//     let audioContext: AudioContext | undefined;
-//     let gainNode: GainNode | undefined;
-//     let source: MediaStreamAudioSourceNode | undefined;
-//     let stream: MediaStream | undefined;
-
-//     const setupAudioStream = async () => {
-//       if (selectedMicId && enableAudio) {
-//         try {
-//           // request access to the selected micrphone
-//           stream = await navigator.mediaDevices.getUserMedia({
-//             audio: { deviceId: { exact: selectedMicId } },
-//           });
-
-//           // log the captured audio stream
-//           console.log("captured audio stream", stream);
-
-//           // setup web audio api
-//           audioContext = new AudioContext();
-//           console.log("audiocontext state after creation", audioContext.state);
-
-//           source = audioContext.createMediaStreamSource(stream);
-//           gainNode = audioContext.createGain();
-
-//           // connect the nodes
-//           source.connect(gainNode);
-//           gainNode.connect(audioContext.destination);
-
-//           // set volume
-//           gainNode.gain.value = volume;
-
-//           // check if audiocontext is suspended and resume if neccesary
-//           if (audioContext.state === "suspended") {
-//             console.log("audiocontext is suspended, resuming...");
-//             await audioContext.resume();
-//             console.log("audiocontext resumed");
-//           } else {
-//             console.log(
-//               "audioContext state is not suspended",
-//               audioContext.state
-//             );
-//           }
-//         } catch (err) {
-//           console.error("error accessing the microphone", err);
-//         }
-//       }
-//     };
-
-//     if (selectedMicId) {
-//       console.log("setting up audio stream for mic", selectedMicId);
-//       setupAudioStream();
-//     }
-
-//     return () => {
-//       console.log("cleaning up audiocomponent");
-//       // clean up
-//       if (stream) {
-//         stream.getTracks().forEach((track) => track.stop());
-//       }
-//       if (audioContext) {
-//         audioContext.close();
-//       }
-//     };
-//   }, [selectedMicId, audioStream, enableAudio]);
-
-//   return null;
-// };
-
-// export default AudioComponent;
