@@ -42,7 +42,7 @@ const Search = ({ setResults }: SearchProps) => {
       {
         params: {
           part: "id",
-          maxResults: 10,
+          maxResults: 15,
           key: process.env.NEXT_PUBLIC_YOUTUBE_API_KEY,
           q: `${term}, karaoke`,
           type: "video",
@@ -95,7 +95,7 @@ const Search = ({ setResults }: SearchProps) => {
         justifyContent: "center",
         alignItems: "center",
       }}>
-      <div className="opacity-50 relative rounded-md border border-gray-800 bg-gray-950 p-2 w-full max-w-52">
+      <div className="opacity-50 relative rounded-md border border-gray-800 bg-gray-950 p-2 w-full h-10 max-w-52">
         <input
           id="searchTerm"
           name="searchTerm"
@@ -117,10 +117,7 @@ const Search = ({ setResults }: SearchProps) => {
       <button
         type="button"
         onClick={clearSearch}
-        className="rounded-md border border-gray-800 bg-gray-950 p-2 px-4 opacity-50"
-        style={{
-          border: "none",
-        }}>
+        className="rounded-md border h-10 border-gray-800 bg-gray-950 p-2 px-4 opacity-50">
         Clear
       </button>
     </form>
