@@ -89,28 +89,20 @@ const Search = ({ setResults }: SearchProps) => {
         e.preventDefault();
         searchYouTube();
       }}
-      className="p-2 px-6 flex flex-row gap-4"
-      style={{
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-      }}>
-      <div className="opacity-50 relative rounded-md border border-gray-800 bg-gray-950 p-2 w-full h-10 max-w-52">
+      className="p-2 px-6 flex flex-row items-center gap-4 justify-end
+      w-full">
+      <div className="flex-grow relative rounded-md border border-gray-800 bg-gray-950 p-2 h-10 max-w-52">
         <input
           id="searchTerm"
           name="searchTerm"
-          className="opacity-50 bg-gray-950"
+          className="bg-transparent w-full"
           type="text"
           value={term}
           onChange={(e) => setTerm(e.target.value)}
         />
         <button
           onClick={searchYouTube}
-          className="absolute right-4 -translate-y-1/2 top-1/2"
-          style={{
-            backgroundColor: "transparent",
-            border: "none",
-          }}>
+          className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-transparent border-none">
           <FaSearch />
         </button>
       </div>

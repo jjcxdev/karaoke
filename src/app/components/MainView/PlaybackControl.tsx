@@ -105,7 +105,7 @@ function PlaybackControl() {
                 </SelectTrigger>
               </Select>
               <Input
-                className="w-full"
+                className="w-full min-w-0"
                 id="speakerVolume"
                 max="100"
                 min="0"
@@ -129,7 +129,7 @@ function PlaybackControl() {
                 </SelectContent>
               </Select>
               <Input
-                className="w-full"
+                className="w-full min-w-0"
                 id="microphoneVolume"
                 max="1"
                 min="0"

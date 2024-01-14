@@ -111,7 +111,7 @@ export default function HomePage() {
           </div>
           {/* Stacked view on mobile */}
           <div className="lg:hidden flex flex-col max-h-">
-            <div className="flex flex-row justify-center items-center pl-4">
+            <div className="flex flex-row justify-center items-center pl-6">
               <button
                 type="button"
                 className="rounded-md h-10 border w-20 border-gray-800 bg-gray-950 p-2 px-4 opacity-50 whitespace-nowrap"
