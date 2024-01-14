@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import VideoPlayerWindow from "@/app/components/MainView/VideoPlayerWindow";
 import Header from "@/app/components/MainView/Header";
 import PlaybackControl from "@/app/components/MainView/PlaybackControl";
@@ -17,6 +17,7 @@ export default function HomePage() {
   const [currentVideo, setCurrentVideo] = useState<PlaylistItemType | null>(
     null
   );
+  const [maxHeight, setMaxHeight] = useState("auto");
 
   const convertToPlaylistItem = (
     item: SearchResult,
@@ -50,6 +51,7 @@ export default function HomePage() {
     };
     setPlaylist((prevPlaylist) => [...prevPlaylist, playlistItem]);
   };
+  const [isPlaylistVisible, setIsPlaylistVisible] = useState(false);
 
   const handleSelectVideo = (video: PlaylistItemType) => {
     setCurrentVideo(video);
@@ -57,11 +59,36 @@ export default function HomePage() {
 
   const video = playlist.find((item) => item.id === currentVideo?.id);
 
+  useEffect(() => {
+    const calculatedMaxHeight = () => {
+      const headerHeight = document.querySelector("header")?.clientHeight || 0;
+      const videoPlayerHeight =
+        document.querySelector(".video-player")?.clientHeight || 0;
+      const playbackControlHeight =
+        document.querySelector(".playback-control")?.clientHeight || 0;
+
+      const calculatedHeight =
+        window.innerHeight -
+        headerHeight -
+        playbackControlHeight -
+        videoPlayerHeight;
+
+      setMaxHeight(`${calculatedHeight}px`);
+    };
+
+    calculatedMaxHeight();
+
+    window.addEventListener("resize", calculatedMaxHeight);
+    return () => window.removeEventListener("resize", calculatedMaxHeight);
+  }, [isPlaylistVisible]);
+
   return (
-    <main className="flex h-screen overflow-hidden flex-col bg-black text-white">
+    <main className="flex h-screen flex-col bg-black text-white">
       <Header />
-      <div className="flex flex-row w-full overflow-hidden">
-        <div className="w-1/2 flex flex-col">
+      {/* Main content area */}
+      <div className="flex flex-grow overflow-hidden">
+        {/* Left side column */}
+        <div className="lg:w-1/2 flex flex-col">
           <div>
             <div className="w-full h-full aspect-video">
               <div className="w-full h-full">
@@ -78,11 +105,42 @@ export default function HomePage() {
                   />
                 )}
               </div>
+
               <PlaybackControl />
             </div>
           </div>
-
-          <div className="overflow-y-auto flex-grow">
+          {/* Stacked view on mobile */}
+          <div className="lg:hidden flex flex-col max-h-">
+            <div className="flex flex-row justify-center items-center pl-4">
+              <button
+                type="button"
+                className="rounded-md h-10 border w-20 border-gray-800 bg-gray-950 p-2 px-4 opacity-50 whitespace-nowrap"
+                onClick={() => setIsPlaylistVisible(!isPlaylistVisible)}>
+                {isPlaylistVisible ? "Search" : "Playlist"}
+              </button>
+              <Search setResults={setResults} />
+            </div>
+            {/* In line to avoid search reload   */}
+            <div
+              className="overflow-y-auto flex-grow"
+              style={{ maxHeight: maxHeight }}>
+              <div style={{ display: isPlaylistVisible ? "block" : "none" }}>
+                <PlaylistView
+                  playlist={playlist}
+                  onAddToPlaylist={handleAddToPlaylist}
+                  onSelectVideo={handleSelectVideo}
+                />
+              </div>
+              <div style={{ display: isPlaylistVisible ? "none" : "block" }}>
+                <ResultView
+                  results={results}
+                  onAddToPlaylist={handleAddToPlaylist}
+                />
+              </div>
+            </div>
+          </div>
+          {/* Playlist view on large */}
+          <div className="hidden lg:flex lg:flex-col lg:overflow-y-auto lg:flex-grow lg:w-full">
             <PlaylistView
               playlist={playlist}
               onAddToPlaylist={handleAddToPlaylist}
@@ -90,7 +148,8 @@ export default function HomePage() {
             />
           </div>
         </div>
-        <div className="w-1/2 flex flex-col">
+        {/* Right side column */}
+        <div className="lg:w-1/2 lg:flex flex-col hidden">
           <div>
             <Search setResults={setResults} />
           </div>
