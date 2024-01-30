@@ -1,24 +1,24 @@
-import PlaylistItem from "./PlaylistItem";
+import PlaylistItem from "./PlaylistItem"
 
 export interface PlaylistItemType {
-  id: string;
-  songTitle: string;
-  bandName: string;
-  thumbnailUrl: string;
-  position: number;
-  channelTitle: string;
+  id: string
+  songTitle: string
+  bandName: string
+  thumbnailUrl: string
+  position: number
+  channelTitle: string
 }
 
 interface PlaylistViewProps {
-  playlist: PlaylistItemType[];
+  playlist: PlaylistItemType[]
   onAddToPlaylist: (item: {
-    songTitle: string;
-    bandName: string;
-    thumbnailUrl: string;
-    videoId: string;
-    channelTitle: string;
-  }) => void;
-  onSelectVideo: (video: PlaylistItemType) => void;
+    songTitle: string
+    bandName: string
+    thumbnailUrl: string
+    videoId: string
+    channelTitle: string
+  }) => void
+  onSelectVideo: (video: PlaylistItemType) => void
 }
 
 const PlaylistView = ({ playlist, onSelectVideo }: PlaylistViewProps) => {
@@ -37,7 +37,7 @@ const PlaylistView = ({ playlist, onSelectVideo }: PlaylistViewProps) => {
         />
       ))}
     </div>
-  );
-};
+  )
+}
 
-export default PlaylistView;
+export default PlaylistView

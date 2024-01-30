@@ -1,22 +1,22 @@
-import Results from "@/app/components/Search/Results";
-import { SearchResult } from "@/app/components/Search/Search";
+import Results from "@/app/components/Search/Results"
+import { SearchResult } from "@/app/components/Search/Search"
 
 interface ResultViewProps {
-  results: SearchResult[];
+  results: SearchResult[]
   onAddToPlaylist: (item: {
-    songTitle: string;
-    bandName: string;
-    thumbnailUrl: string;
-    videoId: string;
-    channelTitle: string;
-  }) => void;
+    songTitle: string
+    bandName: string
+    thumbnailUrl: string
+    videoId: string
+    channelTitle: string
+  }) => void
 }
 
 const ResultView = ({ results, onAddToPlaylist }: ResultViewProps) => {
   return (
     <div>
       {results.map((result, index) => {
-        const key = `${result.id.videoId}-${index}`;
+        const key = `${result.id.videoId}-${index}`
         return (
           <Results
             key={key}
@@ -27,10 +27,10 @@ const ResultView = ({ results, onAddToPlaylist }: ResultViewProps) => {
             onAddToPlaylist={onAddToPlaylist}
             item={result}
           />
-        );
+        )
       })}
     </div>
-  );
-};
+  )
+}
 
-export default ResultView;
+export default ResultView

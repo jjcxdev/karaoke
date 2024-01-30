@@ -1,14 +1,14 @@
-import Image from "next/image";
+import Image from "next/image"
 
 const svgStyle = {
   width: 41,
   height: 30,
-};
+}
 
 export default function Header() {
   return (
     <>
-      <div className="flex h-fit p-2 w-full flex-row justify-between bg-gray-800 px-3">
+      <div className="flex h-fit w-full flex-row justify-between bg-gray-800 p-2 px-3">
         <div>
           <Image
             src="/logo.svg"
@@ -21,5 +21,5 @@ export default function Header() {
         <div>Login</div>
       </div>
     </>
-  );
+  )
 }

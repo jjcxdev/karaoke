@@ -1,13 +1,13 @@
 interface VideoPlayerWindowProps {
   video: {
-    id: string;
-  };
+    id: string
+  }
 }
 
 export default function VideoPlayerWindow({ video }: VideoPlayerWindowProps) {
   return (
     <>
-      <div className="aspect-video w-full relative bg-gray-900">
+      <div className="relative aspect-video w-full bg-gray-900">
         {video && (
           <iframe
             width="100%"
@@ -17,9 +17,10 @@ export default function VideoPlayerWindow({ video }: VideoPlayerWindowProps) {
             frameBorder="0"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
             allowFullScreen
-            className="absolute top-0 left-0 w-full h-full"></iframe>
+            className="absolute left-0 top-0 h-full w-full"
+          ></iframe>
         )}
       </div>
     </>
-  );
+  )
 }

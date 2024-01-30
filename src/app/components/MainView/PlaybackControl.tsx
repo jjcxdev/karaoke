@@ -1,29 +1,29 @@
-"use client";
+"use client"
 
-import { useEffect, useState } from "react";
-import { HiMiniSpeakerWave } from "react-icons/hi2";
-import { FaForwardStep } from "react-icons/fa6";
-import { FaPlay, FaPause, FaMicrophone } from "react-icons/fa";
-import { MdAirplay } from "react-icons/md";
-import { CardContent, Card } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+import { useEffect, useState } from "react"
+import { HiMiniSpeakerWave } from "react-icons/hi2"
+import { FaForwardStep } from "react-icons/fa6"
+import { FaPlay, FaPause, FaMicrophone } from "react-icons/fa"
+import { MdAirplay } from "react-icons/md"
+import { CardContent, Card } from "@/components/ui/card"
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
 import {
   SelectValue,
   SelectTrigger,
   SelectItem,
   SelectContent,
   Select,
-} from "@/components/ui/select";
-import AudioComponent from "./AudioComponent";
-import AudioVisualizer from "./AnalyserNode";
+} from "@/components/ui/select"
+import AudioComponent from "./AudioComponent"
+import AudioVisualizer from "./AnalyserNode"
 
 const PlayerControls = () => {
-  const [isPlaying, setIsPlaying] = useState(false);
+  const [isPlaying, setIsPlaying] = useState(false)
 
   const togglePlayPause = () => {
-    setIsPlaying(!isPlaying);
-  };
+    setIsPlaying(!isPlaying)
+  }
 
   return (
     <Button variant="outline" onClick={togglePlayPause}>
@@ -33,54 +33,54 @@ const PlayerControls = () => {
         <FaPlay className="h-4 w-4" />
       )}
     </Button>
-  );
-};
+  )
+}
 
 function PlaybackControl() {
-  const [microphones, setMicrophones] = useState<MediaDeviceInfo[]>([]);
-  const [selectedMicId, setSelectedMicId] = useState("");
-  const [micVolume, setMicVolume] = useState(0.5);
-  const [enableAudio, setEnableAudio] = useState(false);
-  const [analyserNode, setAnalyserNode] = useState<AnalyserNode | null>(null);
+  const [microphones, setMicrophones] = useState<MediaDeviceInfo[]>([])
+  const [selectedMicId, setSelectedMicId] = useState("")
+  const [micVolume, setMicVolume] = useState(0.5)
+  const [enableAudio, setEnableAudio] = useState(false)
+  const [analyserNode, setAnalyserNode] = useState<AnalyserNode | null>(null)
 
   const handleMicVolumeChange = (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
-    const newVolume = parseFloat(event.target.value);
-    console.log("microphone volume changed", newVolume);
-    setMicVolume(newVolume);
-  };
+    const newVolume = parseFloat(event.target.value)
+    console.log("microphone volume changed", newVolume)
+    setMicVolume(newVolume)
+  }
 
   useEffect(() => {
     navigator.mediaDevices.enumerateDevices().then((devices) => {
-      const mics = devices.filter((device) => device.kind === "audioinput");
-      console.log("available microphones:", mics);
-      setMicrophones(mics);
-    });
-  }, []);
+      const mics = devices.filter((device) => device.kind === "audioinput")
+      console.log("available microphones:", mics)
+      setMicrophones(mics)
+    })
+  }, [])
 
   useEffect(() => {
-    const audioContext = new AudioContext();
-    const node = audioContext.createAnalyser();
-    setAnalyserNode(node);
+    const audioContext = new AudioContext()
+    const node = audioContext.createAnalyser()
+    setAnalyserNode(node)
 
     return () => {
-      node.disconnect();
-      audioContext.close();
-    };
-  }, []);
+      node.disconnect()
+      audioContext.close()
+    }
+  }, [])
 
   const handleMicChange = (value: string) => {
-    console.log("selected microphone id", value);
-    setSelectedMicId(value);
-  };
+    console.log("selected microphone id", value)
+    setSelectedMicId(value)
+  }
 
   const toggleEnableAudio = () => {
-    setEnableAudio(!enableAudio);
-  };
+    setEnableAudio(!enableAudio)
+  }
 
   return (
-    <main className="items-center w-full justify-center bg-gray-100 dark:bg-gray-800">
+    <main className="w-full items-center justify-center bg-gray-100 dark:bg-gray-800">
       <AudioComponent
         selectedMicId={selectedMicId}
         enableAudio={enableAudio}
@@ -147,7 +147,7 @@ function PlaybackControl() {
         {enableAudio ? "Switch to Microphone" : "Switch to Oscillator"}
       </button> */}
     </main>
-  );
+  )
 }
 
-export default PlaybackControl;
+export default PlaybackControl

@@ -1,23 +1,23 @@
-"use client";
+"use client"
 
-import { useEffect, useState } from "react";
-import VideoPlayerWindow from "@/app/components/MainView/VideoPlayerWindow";
-import Header from "@/app/components/MainView/Header";
-import PlaybackControl from "@/app/components/MainView/PlaybackControl";
-import Search from "@/app/components/Search/Search";
-import ResultView from "@/app/components/Search/ResultView";
-import { SearchResult } from "@/app/components/Search/Search";
-import PlaylistView from "@/app/components/Playlist/PlaylistView";
-import { PlaylistItemType } from "@/app/components/Playlist/PlaylistView";
-import Image from "next/image";
+import { useEffect, useState } from "react"
+import VideoPlayerWindow from "@/app/components/MainView/VideoPlayerWindow"
+import Header from "@/app/components/MainView/Header"
+import PlaybackControl from "@/app/components/MainView/PlaybackControl"
+import Search from "@/app/components/Search/Search"
+import ResultView from "@/app/components/Search/ResultView"
+import { SearchResult } from "@/app/components/Search/Search"
+import PlaylistView from "@/app/components/Playlist/PlaylistView"
+import { PlaylistItemType } from "@/app/components/Playlist/PlaylistView"
+import Image from "next/image"
 
 export default function HomePage() {
-  const [results, setResults] = useState<SearchResult[]>([]);
-  const [playlist, setPlaylist] = useState<PlaylistItemType[]>([]);
+  const [results, setResults] = useState<SearchResult[]>([])
+  const [playlist, setPlaylist] = useState<PlaylistItemType[]>([])
   const [currentVideo, setCurrentVideo] = useState<PlaylistItemType | null>(
     null
-  );
-  const [maxHeight, setMaxHeight] = useState("auto");
+  )
+  const [maxHeight, setMaxHeight] = useState("auto")
 
   const convertToPlaylistItem = (
     item: SearchResult,
@@ -31,15 +31,15 @@ export default function HomePage() {
       thumbnailUrl: item.snippet.thumbnails.default.url,
       position: 0,
       channelTitle: item.snippet.channelTitle,
-    };
-  };
+    }
+  }
 
   const handleAddToPlaylist = (item: {
-    songTitle: string;
-    bandName: string;
-    thumbnailUrl: string;
-    videoId: string;
-    channelTitle: string;
+    songTitle: string
+    bandName: string
+    thumbnailUrl: string
+    videoId: string
+    channelTitle: string
   }) => {
     const playlistItem = {
       id: item.videoId,
@@ -48,39 +48,39 @@ export default function HomePage() {
       thumbnailUrl: item.thumbnailUrl,
       position: playlist.length + 1,
       channelTitle: item.channelTitle,
-    };
-    setPlaylist((prevPlaylist) => [...prevPlaylist, playlistItem]);
-  };
-  const [isPlaylistVisible, setIsPlaylistVisible] = useState(false);
+    }
+    setPlaylist((prevPlaylist) => [...prevPlaylist, playlistItem])
+  }
+  const [isPlaylistVisible, setIsPlaylistVisible] = useState(false)
 
   const handleSelectVideo = (video: PlaylistItemType) => {
-    setCurrentVideo(video);
-  };
+    setCurrentVideo(video)
+  }
 
-  const video = playlist.find((item) => item.id === currentVideo?.id);
+  const video = playlist.find((item) => item.id === currentVideo?.id)
 
   useEffect(() => {
     const calculatedMaxHeight = () => {
-      const headerHeight = document.querySelector("header")?.clientHeight || 0;
+      const headerHeight = document.querySelector("header")?.clientHeight || 0
       const videoPlayerHeight =
-        document.querySelector(".video-player")?.clientHeight || 0;
+        document.querySelector(".video-player")?.clientHeight || 0
       const playbackControlHeight =
-        document.querySelector(".playback-control")?.clientHeight || 0;
+        document.querySelector(".playback-control")?.clientHeight || 0
 
       const calculatedHeight =
         window.innerHeight -
         headerHeight -
         playbackControlHeight -
-        videoPlayerHeight;
+        videoPlayerHeight
 
-      setMaxHeight(`${calculatedHeight}px`);
-    };
+      setMaxHeight(`${calculatedHeight}px`)
+    }
 
-    calculatedMaxHeight();
+    calculatedMaxHeight()
 
-    window.addEventListener("resize", calculatedMaxHeight);
-    return () => window.removeEventListener("resize", calculatedMaxHeight);
-  }, [isPlaylistVisible]);
+    window.addEventListener("resize", calculatedMaxHeight)
+    return () => window.removeEventListener("resize", calculatedMaxHeight)
+  }, [isPlaylistVisible])
 
   return (
     <main className="flex h-screen flex-col bg-black text-white">
@@ -88,17 +88,17 @@ export default function HomePage() {
       {/* Main content area */}
       <div className="flex flex-grow overflow-hidden">
         {/* Left side column */}
-        <div className="lg:w-1/2 flex flex-col">
+        <div className="flex flex-col lg:w-1/2">
           <div>
-            <div className="w-full h-full aspect-video">
-              <div className="w-full h-full">
+            <div className="aspect-video h-full w-full">
+              <div className="h-full w-full">
                 {currentVideo ? (
                   <VideoPlayerWindow video={currentVideo} />
                 ) : (
                   <Image
                     src="/video.png"
                     alt="placeholder"
-                    className="w-full h-full aspect-video"
+                    className="aspect-video h-full w-full"
                     width="1240"
                     height="720"
                     priority={true}
@@ -110,20 +110,22 @@ export default function HomePage() {
             </div>
           </div>
           {/* Stacked view on mobile */}
-          <div className="lg:hidden flex flex-col max-h-">
-            <div className="flex flex-row justify-center items-center pl-6">
+          <div className="flex max-h-full flex-col lg:hidden">
+            <div className="flex flex-row items-center justify-center pl-6">
               <button
                 type="button"
-                className="rounded-md h-10 border w-20 border-gray-800 bg-gray-950 p-2 px-4 opacity-50 whitespace-nowrap"
-                onClick={() => setIsPlaylistVisible(!isPlaylistVisible)}>
+                className="h-10 w-20 whitespace-nowrap rounded-md border border-gray-800 bg-gray-950 p-2 px-4 opacity-50"
+                onClick={() => setIsPlaylistVisible(!isPlaylistVisible)}
+              >
                 {isPlaylistVisible ? "Search" : "Playlist"}
               </button>
               <Search setResults={setResults} />
             </div>
             {/* In line to avoid search reload   */}
             <div
-              className="overflow-y-auto flex-grow"
-              style={{ maxHeight: maxHeight }}>
+              className="flex-grow overflow-y-auto"
+              style={{ maxHeight: maxHeight }}
+            >
               <div style={{ display: isPlaylistVisible ? "block" : "none" }}>
                 <PlaylistView
                   playlist={playlist}
@@ -140,7 +142,7 @@ export default function HomePage() {
             </div>
           </div>
           {/* Playlist view on large */}
-          <div className="hidden lg:flex lg:flex-col lg:overflow-y-auto lg:flex-grow lg:w-full">
+          <div className="hidden lg:flex lg:w-full lg:flex-grow lg:flex-col lg:overflow-y-auto">
             <PlaylistView
               playlist={playlist}
               onAddToPlaylist={handleAddToPlaylist}
@@ -149,7 +151,7 @@ export default function HomePage() {
           </div>
         </div>
         {/* Right side column */}
-        <div className="lg:w-1/2 lg:flex flex-col hidden">
+        <div className="hidden flex-col lg:flex lg:w-1/2">
           <div>
             <Search setResults={setResults} />
           </div>
@@ -162,5 +164,5 @@ export default function HomePage() {
         </div>
       </div>
     </main>
-  );
+  )
 }
